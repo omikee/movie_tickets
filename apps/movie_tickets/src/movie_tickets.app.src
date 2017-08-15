@@ -1,0 +1,18 @@
+{application, movie_tickets,
+ [{description, "Movie Ticket reservation system"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { movie_tickets_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    cowboy,
+    jsone
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

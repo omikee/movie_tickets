@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Tickets Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Movie Tickets Test</h1>
+    <hr/>
+    <label>IMDB ID</label><input id="imdb_id" value="tt0111161">
+    <label>SCREEN ID</label><input id="screen_id" value="screen_123456">
+    <label>AVAILABLE SEATS</label><input id="available_seats" type="number" value="10">
+    <hr/><span>HTTP GET</span>
+    <button onclick="register_movie_get()">REGISTER MOVIE</button>
+    <button onclick="reserve_seat_get()">RESERVE SEAT</button>
+    <button onclick="get_information_get()">GET INFORMATION</button>
+    <hr/><span>HTTP POST</span>
+    <button onclick="register_movie_post()">REGISTER MOVIE</button>
+    <button onclick="reserve_seat_post()">RESERVE SEAT</button>
+    <button onclick="get_information_post()">GET INFORMATION</button>
+    <hr/>
+    <textarea id="resultArea" readonly style="width: 800px; height: 200px;"></textarea>
+    <script>
+        var host = 'http://localhost:8010/';
+        var imdb_id = document.getElementById('imdb_id');
+        var screen_id = document.getElementById('screen_id');
+        var available_seats = document.getElementById('available_seats');
+        var resultArea = document.getElementById('resultArea');
+        function register_movie_get() {
+            $.get(host, {
+                request: "register_movie",
+                imdbId: imdb_id.value,
+                screenId: screen_id.value,
+                availableSeats: parseInt(available_seats.value)
+            }, resultFun);
+        };
+        function reserve_seat_get() {
+            $.get(host, {
+                request: "reserve_seat",
+                imdbId: imdb_id.value,
+                screenId: screen_id.value
+            }, resultFun);
+        };
+        function get_information_get() {
+            $.get(host, {
+                request: "get_information",
+                imdbId: imdb_id.value,
+                screenId: screen_id.value
+            }, resultFun);
+        };
+        function register_movie_post() {
+            $.post(host, JSON.stringify({
+                request: "register_movie",
+                params: {
+                    imdbId: imdb_id.value,
+                    screenId: screen_id.value,
+                    availableSeats: parseInt(available_seats.value)
+                }
+            }), resultFun);
+        };
+        function reserve_seat_post() {
+            $.post(host, JSON.stringify({
+                request: "reserve_seat",
+                params: {
+                    imdbId: imdb_id.value,
+                    screenId: screen_id.value
+                }
+            }), resultFun);
+        };
+        function get_information_post() {
+            $.post(host, JSON.stringify({
+                request: "get_information",
+                params: {
+                    imdbId: imdb_id.value,
+                    screenId: screen_id.value
+                }
+            }), resultFun);
+        };
+        function resultFun(data) { resultArea.append(data + '\n'); resultArea.scrollTop = resultArea.scrollHeight; };
+    </script>
+</body>
+</html>
