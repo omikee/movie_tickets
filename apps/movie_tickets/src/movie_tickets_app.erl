@@ -18,7 +18,10 @@ start(_StartType, _StartArgs) ->
     Ip = application:get_env(movie_tickets, ip, {127,0,0,1}),
     Port = application:get_env(movie_tickets, port, 8010),
     Dispatch = cowboy_router:compile([
-        {'_', [{'_', movie_tickets_handler, #{}}]}
+        {'_', [
+            {"/", cowboy_static, {priv_file, movie_tickets, "index.html"}},
+            {"/ws", movie_tickets_handler, #{}}
+        ]}
     ]),
     {ok, _} = cowboy:start_clear(http,
         [{ip, Ip}, {port, Port}],
